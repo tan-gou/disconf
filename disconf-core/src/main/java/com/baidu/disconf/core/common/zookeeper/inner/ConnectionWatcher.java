@@ -13,53 +13,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 连接管理
- *
- * @author liaoqiqi
+ * Zookeeper 连接管理
  */
 public class ConnectionWatcher implements Watcher {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(ConnectionWatcher.class);
 
-    // 10 秒会话时间 ，避免频繁的session expired
-    private static final int SESSION_TIMEOUT = 10000;
-
-    // 3秒
+    /** 3s */
     private static final int CONNECT_TIMEOUT = 3000;
+    /** 10s ，避免频繁的 session expired */
+    private static final int SESSION_TIMEOUT = 10000;
 
     protected ZooKeeper zk;
     private CountDownLatch connectedSignal = new CountDownLatch(1);
 
     private static String internalHost = "";
 
-    // 是否调试状态
     private boolean debug = false;
 
-    /**
-     * @param debug
-     */
     public ConnectionWatcher(boolean debug) {
         this.debug = debug;
     }
 
     /**
-     * @param hosts
-     *
-     * @return void
-     *
-     * @throws IOException
-     * @throws InterruptedException
-     * @Description: 连接ZK
-     * @author liaoqiqi
-     * @date 2013-6-14
+     * 连接 zookeeper
      */
     public void connect(String hosts) throws IOException, InterruptedException {
         internalHost = hosts;
+        /** zk 连接超时时间 3s，超时会报异常*/
         zk = new ZooKeeper(internalHost, SESSION_TIMEOUT, this);
 
-        // 连接有超时哦
         connectedSignal.await(CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
-
         LOGGER.info("zookeeper: " + hosts + " , connected.");
     }
 
@@ -69,22 +53,15 @@ public class ConnectionWatcher implements Watcher {
     @Override
     public void process(WatchedEvent event) {
         if (event.getState() == KeeperState.SyncConnected) {
-
             LOGGER.info("zk SyncConnected");
             connectedSignal.countDown();
-
         } else if (event.getState().equals(KeeperState.Disconnected)) {
-
             // 这时收到断开连接的消息，这里其实无能为力，因为这时已经和ZK断开连接了，只能等ZK再次开启了
             LOGGER.warn("zk Disconnected");
-
         } else if (event.getState().equals(KeeperState.Expired)) {
-
             if (!debug) {
-
                 // 这时收到这个信息，表示，ZK已经重新连接上了，但是会话丢失了，这时需要重新建立会话。
                 LOGGER.error("zk Expired");
-
                 // just reconnect forever
                 reconnect();
             } else {
@@ -103,27 +80,21 @@ public class ConnectionWatcher implements Watcher {
     public synchronized void reconnect() {
 
         LOGGER.info("start to reconnect....");
-
         int retries = 0;
+
         while (true) {
-
             try {
-
                 if (!zk.getState().equals(States.CLOSED)) {
                     break;
                 }
 
                 LOGGER.warn("zookeeper lost connection, reconnect");
-
+                // 关闭连接
                 close();
-
+                // 重新连接
                 connect(internalHost);
-
             } catch (Exception e) {
-
                 LOGGER.error(retries + "\t" + e.toString());
-
-                // sleep then retry
                 try {
                     int sec = ResilientActiveKeyValueStore.RETRY_PERIOD_SECONDS;
                     LOGGER.warn("sleep " + sec);
@@ -134,14 +105,6 @@ public class ConnectionWatcher implements Watcher {
         }
     }
 
-    /**
-     * @return void
-     *
-     * @throws InterruptedException
-     * @Description: 关闭
-     * @author liaoqiqi
-     * @date 2013-6-14
-     */
     public void close() throws InterruptedException {
         zk.close();
     }
@@ -149,7 +112,6 @@ public class ConnectionWatcher implements Watcher {
     public ZooKeeper getZk() {
         return zk;
     }
-
     public void setZk(ZooKeeper zk) {
         this.zk = zk;
     }
