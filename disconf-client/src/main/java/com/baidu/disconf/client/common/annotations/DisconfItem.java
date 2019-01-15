@@ -8,9 +8,6 @@ import java.lang.annotation.Target;
 
 /**
  * 分布式的配置项
- *
- * @author liaoqiqi
- * @version 2014-5-16
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
