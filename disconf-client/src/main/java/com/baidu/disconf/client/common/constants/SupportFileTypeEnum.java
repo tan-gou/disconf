@@ -5,20 +5,21 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 支持的文件后缀类型
- *
- * @author knightliao
  */
 public enum SupportFileTypeEnum {
 
     /**
      * 支持properties 特殊处理，支持非properties任意处理
      */
-    PROPERTIES(0, "properties"), XML(1, "xml"), ANY(3, "*");
+    PROPERTIES(0, "properties"),
+    XML(1, "xml"),
+    ANY(3, "*"),
+    ;
 
     private int type = 0;
     private String modelName = null;
 
-    private SupportFileTypeEnum(int type, String modelName) {
+    SupportFileTypeEnum(int type, String modelName) {
         this.type = type;
         this.modelName = modelName;
     }
@@ -34,7 +35,6 @@ public enum SupportFileTypeEnum {
         }
 
         for (SupportFileTypeEnum supportFileTypeEnum : SupportFileTypeEnum.values()) {
-
             if (extension.equals(supportFileTypeEnum.modelName)) {
                 return supportFileTypeEnum;
             }
@@ -45,14 +45,10 @@ public enum SupportFileTypeEnum {
 
     public static SupportFileTypeEnum getByType(int type) {
 
-        int index = 0;
         for (SupportFileTypeEnum supportFileTypeEnum : SupportFileTypeEnum.values()) {
-
-            if (type == index) {
+            if (type == supportFileTypeEnum.getType()) {
                 return supportFileTypeEnum;
             }
-
-            index++;
         }
 
         return null;
@@ -73,5 +69,4 @@ public enum SupportFileTypeEnum {
     public void setModelName(String modelName) {
         this.modelName = modelName;
     }
-
 }
