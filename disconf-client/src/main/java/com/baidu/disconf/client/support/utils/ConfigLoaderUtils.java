@@ -1,8 +1,6 @@
 package com.baidu.disconf.client.support.utils;
 
 import com.baidu.disconf.core.common.utils.ClassLoaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -65,12 +63,5 @@ public final class ConfigLoaderUtils {
         Properties props = new Properties();
         props.load(new InputStreamReader(new FileInputStream(propertyFilePath), "utf-8"));
         return props;
-    }
-
-
-    public static void main(String[] args) throws Exception {
-
-        Properties properties = ConfigLoaderUtils.loadConfig("disconf_sys.properties");
-        System.out.println(properties);
     }
 }
