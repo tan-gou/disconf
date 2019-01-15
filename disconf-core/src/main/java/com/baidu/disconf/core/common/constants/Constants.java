@@ -1,9 +1,6 @@
 package com.baidu.disconf.core.common.constants;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-6
- */
+
 public class Constants {
 
     public static final String DEFAULT_VERSION = "DEFAULT_VERSION";
