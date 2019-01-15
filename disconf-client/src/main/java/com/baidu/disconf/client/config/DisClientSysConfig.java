@@ -7,10 +7,7 @@ import com.baidu.disconf.client.config.inner.DisInnerConfigAnnotation;
 import com.baidu.disconf.client.support.DisconfAutowareConfig;
 
 /**
- * Disconf 系统自带的配置
- *
- * @author liaoqiqi
- * @version 2014-6-6
+ * 系统自带的配置： 单例模式
  */
 public class DisClientSysConfig {
 
@@ -22,6 +19,7 @@ public class DisClientSysConfig {
         return INSTANCE;
     }
 
+    /** 默认系统配置文件 */
     protected static final String filename = "disconf_sys.properties";
 
     private boolean isLoaded = false;
@@ -30,13 +28,6 @@ public class DisClientSysConfig {
 
     }
 
-    public synchronized boolean isLoaded() {
-        return isLoaded;
-    }
-
-    /**
-     * load config normal
-     */
     public synchronized void loadConfig(String filePath) throws Exception {
 
         if (isLoaded) {
@@ -44,9 +35,7 @@ public class DisClientSysConfig {
         }
 
         String filePathInternal = filename;
-
         if (filePath != null) {
-
             filePathInternal = filePath;
         }
 
@@ -55,40 +44,29 @@ public class DisClientSysConfig {
         isLoaded = true;
     }
 
-    /**
-     * STORE URL
-     *
-     * @author
-     * @since 1.0.0
-     */
+
+    // disconf 系统配置项
+
     @DisInnerConfigAnnotation(name = "disconf.conf_server_store_action")
     public String CONF_SERVER_STORE_ACTION;
 
-    /**
-     * STORE URL
-     *
-     * @author
-     * @since 1.0.0
-     */
     @DisInnerConfigAnnotation(name = "disconf.conf_server_zoo_action")
     public String CONF_SERVER_ZOO_ACTION;
 
     /**
      * 获取远程主机个数的URL
-     *
-     * @author
-     * @since 1.0.0
      */
     @DisInnerConfigAnnotation(name = "disconf.conf_server_master_num_action")
     public String CONF_SERVER_MASTER_NUM_ACTION;
 
     /**
      * 下载文件夹, 远程文件下载后会放在这里
-     *
-     * @author
-     * @since 1.0.0
      */
     @DisInnerConfigAnnotation(name = "disconf.local_download_dir")
     public String LOCAL_DOWNLOAD_DIR;
 
+
+    public synchronized boolean isLoaded() {
+        return isLoaded;
+    }
 }
