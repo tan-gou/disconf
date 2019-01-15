@@ -13,33 +13,25 @@ import org.slf4j.LoggerFactory;
  */
 public final class ClassLoaderUtil {
 
-    protected static final Logger LOGGER = LoggerFactory
-            .getLogger(ClassLoaderUtil.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ClassLoaderUtil.class);
 
-    // class path
     private static String classPath = "";
 
-    // loader
     private static ClassLoader loader = Thread.currentThread().getContextClassLoader();
 
     private ClassLoaderUtil() {
     }
 
-    //
-    // get class path
-    //
     static {
-
         if (loader == null) {
             LOGGER.info("using system class loader!");
             loader = ClassLoader.getSystemClassLoader();
         }
 
         try {
-
             java.net.URL url = loader.getResource("");
             // get class path
-            File f=new File(url.toURI());
+            File f = new File(url.toURI());
             classPath = f.getAbsolutePath();
             classPath = URLDecoder.decode(classPath, "utf-8");
 
@@ -48,15 +40,11 @@ public final class ClassLoaderUtil {
                 LOGGER.warn("using config file inline jar!" + classPath);
                 classPath = System.getProperty("user.dir");
 
-                //
                 addCurrentWorkingDir2Classpath(classPath);
             }
-
         } catch (Exception e) {
             LOGGER.warn("cannot get classpath using getResource(), now using user.dir");
             classPath = System.getProperty("user.dir");
-
-            //
             addCurrentWorkingDir2Classpath(classPath);
         }
 
