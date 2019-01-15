@@ -2,19 +2,22 @@ package com.baidu.disconf.client.common.model;
 
 /**
  * 通用的模型数据，包括 APP，版本，环境，Zookeeper上的URL表示
- *
- * @author liaoqiqi
- * @version 2014-5-20
  */
 public class DisConfCommonModel {
 
-    // app 名
+    /**
+     * app 名
+     */
     private String app;
 
-    // 版本号
+    /**
+     * 版本号
+     */
     private String version;
 
-    // 环境
+    /**
+     * 环境
+     */
     private String env;
 
     public String getApp() {
