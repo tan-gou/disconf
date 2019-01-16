@@ -14,9 +14,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.baidu.disconf.client.support.registry.Registry;
 
-/**
- * Created by knightliao on 15/11/26.
- */
+
 public class SpringRegistry implements Registry, ApplicationContextAware {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(SpringRegistry.class);
@@ -92,6 +90,9 @@ public class SpringRegistry implements Registry, ApplicationContextAware {
         return applicationContext.getBeansOfType(type);
     }
 
+    /**
+     * 获取代理
+     */
     protected <T> T getTargetObject(Object proxy, Class<T> targetClass) throws Exception {
         if (AopUtils.isJdkDynamicProxy(proxy)) {
             return (T) ((Advised) proxy).getTargetSource().getTarget();
