@@ -12,9 +12,6 @@ import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
 
 /**
  * 监控器 实例 工厂
- *
- * @author liaoqiqi
- * @version 2014-7-29
  */
 public class WatchFactory {
 
@@ -24,9 +21,7 @@ public class WatchFactory {
     private static String zooPrefix = null;
     private static final Object hostsSync = new Object();
 
-    /**
-     * @throws Exception
-     */
+
     public static WatchMgr getWatchMgr(FetcherMgr fetcherMgr) throws Exception {
 
         if (!ConfigMgr.isInit()) {
@@ -36,28 +31,19 @@ public class WatchFactory {
         if (hosts == null || zooPrefix == null) {
             synchronized(hostsSync) {
                 if (hosts == null || zooPrefix == null) {
-
-                    // 获取 Zoo Hosts
                     try {
+                        hosts = fetcherMgr.getValueFromServer(DisconfWebPathMgr
+                                .getZooHostsUrl(DisClientSysConfig.getInstance().CONF_SERVER_ZOO_ACTION));
 
-                        hosts = fetcherMgr.getValueFromServer(DisconfWebPathMgr.getZooHostsUrl(DisClientSysConfig
-                                                                                                   .getInstance()
-                                                                                                   .CONF_SERVER_ZOO_ACTION));
-
-                        zooPrefix = fetcherMgr.getValueFromServer(DisconfWebPathMgr.getZooPrefixUrl(DisClientSysConfig
-                                                                                                        .getInstance
-                                                                                                             ()
-                                                                                                        .CONF_SERVER_ZOO_ACTION));
+                        zooPrefix = fetcherMgr.getValueFromServer(DisconfWebPathMgr
+                                .getZooPrefixUrl(DisClientSysConfig.getInstance().CONF_SERVER_ZOO_ACTION));
 
                         WatchMgr watchMgr = new WatchMgrImpl();
                         watchMgr.init(hosts, zooPrefix, DisClientConfig.getInstance().DEBUG);
 
                         return watchMgr;
-
                     } catch (Exception e) {
-
                         LOGGER.error("cannot get watch module", e);
-
                     }
                 }
             }
