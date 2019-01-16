@@ -6,17 +6,9 @@ import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 
 /**
  * 监控的接口
- *
- * @author liaoqiqi
- * @version 2014-7-29
  */
 public interface WatchMgr {
 
-    /**
-     * 初始化
-     *
-     * @throws Exception
-     */
     void init(String hosts, String zooUrlPrefix, boolean debug) throws Exception;
 
     /**
