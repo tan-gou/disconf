@@ -16,12 +16,10 @@ public enum DisConfigTypeEnum {
     }
 
     public static DisConfigTypeEnum getByType(int type) {
-        int index = 0;
         for (DisConfigTypeEnum disConfigTypeEnum : DisConfigTypeEnum.values()) {
-            if (type == index) {
+            if (type == disConfigTypeEnum.getType()) {
                 return disConfigTypeEnum;
             }
-            index++;
         }
         return null;
     }
