@@ -20,23 +20,15 @@ import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
  */
 public class StaticScannerNonAnnotationFileMgrImpl extends StaticScannerMgrImplBase implements StaticScannerMgr {
 
-    /**
-     *
-     */
     @Override
     public void scanData2Store(ScanStaticModel scanModel) {
 
-        //
-        //
-        //
         List<DisconfCenterBaseModel> disconfCenterBaseModels = getDisconfCenterFiles(scanModel.getJustHostFiles());
 
         DisconfStoreProcessorFactory.getDisconfStoreFileProcessor().transformScanData(disconfCenterBaseModels);
     }
 
-    /**
-     *
-     */
+
     public static void scanData2Store(String fileName) {
 
         DisconfCenterBaseModel disconfCenterBaseModel =
@@ -45,40 +37,29 @@ public class StaticScannerNonAnnotationFileMgrImpl extends StaticScannerMgrImplB
         DisconfStoreProcessorFactory.getDisconfStoreFileProcessor().transformScanData(disconfCenterBaseModel);
     }
 
-    /**
-     *
-     */
+
     @Override
     public void exclude(Set<String> keySet) {
         DisconfStoreProcessorFactory.getDisconfStoreFileProcessor().exclude(keySet);
     }
 
-    /**
-     *
-     */
+
     public static List<DisconfCenterBaseModel> getDisconfCenterFiles(Set<String> fileNameList) {
 
         List<DisconfCenterBaseModel> disconfCenterFiles = new ArrayList<DisconfCenterBaseModel>();
 
         for (String fileName : fileNameList) {
-
             disconfCenterFiles.add(getDisconfCenterFile(fileName));
         }
-
         return disconfCenterFiles;
     }
 
-    /**
-     *
-     */
+
     public static DisconfCenterBaseModel getDisconfCenterFile(String fileName) {
 
         DisconfCenterFile disconfCenterFile = new DisconfCenterFile();
 
         fileName = fileName.trim();
-
-        //
-        // file name
         disconfCenterFile.setFileName(fileName);
 
         // 非注解式
@@ -87,7 +68,6 @@ public class StaticScannerNonAnnotationFileMgrImpl extends StaticScannerMgrImplB
         // file type
         disconfCenterFile.setSupportFileTypeEnum(SupportFileTypeEnum.getByFileName(fileName));
 
-        //
         // disConfCommonModel
         DisConfCommonModel disConfCommonModel = makeDisConfCommonModel("", "", "");
         disconfCenterFile.setDisConfCommonModel(disConfCommonModel);
