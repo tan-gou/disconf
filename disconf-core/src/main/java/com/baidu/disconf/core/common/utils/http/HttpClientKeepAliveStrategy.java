@@ -8,9 +8,7 @@ import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
 
-/**
- * Created by knightliao on 16/1/7.
- */
+
 public class HttpClientKeepAliveStrategy implements ConnectionKeepAliveStrategy {
 
     private int keepAliveTimeOut = 5;
