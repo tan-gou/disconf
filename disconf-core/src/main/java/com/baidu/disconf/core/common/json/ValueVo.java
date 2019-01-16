@@ -4,19 +4,13 @@ import com.baidu.disconf.core.common.constants.Constants;
 
 /**
  * 通用的Value Vo
- *
- * @author liaoqiqi
- * @version 2014-6-10
  */
 public class ValueVo {
 
     // 是否存在此KEy
     private Integer status = Constants.OK;
 
-    //
     private String message = "";
-
-    //
     private String value = "";
 
     public Integer getStatus() {
