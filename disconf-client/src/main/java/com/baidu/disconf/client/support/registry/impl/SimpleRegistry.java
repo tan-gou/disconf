@@ -8,9 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.baidu.disconf.client.support.registry.Registry;
 
-/**
- * Created by knightliao on 15/11/26.
- */
+
 public class SimpleRegistry implements Registry {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(SimpleRegistry.class);
@@ -23,14 +21,10 @@ public class SimpleRegistry implements Registry {
         try {
             ret.add(type.newInstance());
         } catch (InstantiationException e) {
-
             LOGGER.error("Failed to init " + type.getSimpleName() + " " + e.toString());
-
         } catch (IllegalAccessException e) {
-
             LOGGER.error("Failed to init " + type.getSimpleName() + " " + e.toString());
         }
-
         return ret;
     }
 
