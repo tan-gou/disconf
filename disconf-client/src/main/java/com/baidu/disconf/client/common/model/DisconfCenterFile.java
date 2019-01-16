@@ -17,9 +17,6 @@ import com.baidu.disconf.core.common.utils.OsUtil;
 
 /**
  * 配置文件表示
- *
- * @author liaoqiqi
- * @version 2014-5-20
  */
 public class DisconfCenterFile extends DisconfCenterBaseModel {
 
@@ -116,6 +113,7 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
                 "\tadditionalKeyMaps=" + additionalKeyMaps + "\n\tcls=" + cls + super.infoString() + "]";
     }
 
+
     /**
      * 获取可以表示的KeyMap对
      */
@@ -126,9 +124,7 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
             return additionalKeyMaps;
         }
 
-        //
         // 注解式的
-        //
         Map<String, Object> map = new HashMap<String, Object>();
         for (String key : keyMaps.keySet()) {
             map.put(key, keyMaps.get(key).getValue());
@@ -148,11 +144,9 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
         }
 
         if (targetDirPath != null) {
-
             if (targetDirPath.startsWith("/")) {
                 return OsUtil.pathJoin(targetDirPath, fileName);
             }
-
             return OsUtil.pathJoin(ClassLoaderUtil.getClassPath(), targetDirPath, fileName);
         }
 
@@ -179,9 +173,6 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
 
     /**
      * 配置文件Item项表示，包括了值，还有其类型
-     *
-     * @author liaoqiqi
-     * @version 2014-6-16
      */
     public static class FileItemValue {
 
@@ -203,31 +194,21 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
 
         /**
          * 是否是静态域
-         *
-         * @return
          */
         public boolean isStatic() {
             return Modifier.isStatic(field.getModifiers());
         }
 
-        /**
-         * 设置value, 优先使用 setter method, 然后其次是反射
-         *
-         * @param value
-         */
         public Object setValue4StaticFileItem(Object value) throws Exception {
-
             try {
                 if (setMethod != null) {
                     setMethod.invoke(null, value);
                 } else {
                     field.set(null, value);
                 }
-
             } catch (Exception e) {
                 LOGGER.warn(e.toString());
             }
-
             return value;
         }
 
@@ -246,15 +227,7 @@ public class DisconfCenterFile extends DisconfCenterBaseModel {
             return value;
         }
 
-        /**
-         * 返回值
-         *
-         * @param fieldValue
-         *
-         * @return
-         *
-         * @throws Exception
-         */
+
         public Object getFieldValueByType(Object fieldValue) throws Exception {
             return ClassUtils.getValeByType(field.getType(), fieldValue);
         }
