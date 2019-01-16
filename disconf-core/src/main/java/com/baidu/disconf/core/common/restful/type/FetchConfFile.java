@@ -11,7 +11,7 @@ import com.baidu.disconf.core.common.restful.core.UnreliableInterface;
 import com.baidu.disconf.core.common.utils.OsUtil;
 
 /**
- * 下载文件
+ * 下载配置文件
  */
 public class FetchConfFile implements UnreliableInterface {
 
