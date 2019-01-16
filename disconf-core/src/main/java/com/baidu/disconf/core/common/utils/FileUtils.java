@@ -12,16 +12,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 文件操作的方法集
- *
- * @author liaoqiqi
- * @version 2014-8-20
  */
 public final class FileUtils extends org.apache.commons.io.FileUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
     private FileUtils() {
-
     }
 
     /**
@@ -82,11 +78,8 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
      *
      * @param oldName
      * @param newName
-     *
-     * @return
      */
     public static boolean isFileUpdate(String oldName, String newName) {
-
         return isFileEqual(new File(oldName), new File(newName));
     }
 
@@ -97,17 +90,11 @@ public final class FileUtils extends org.apache.commons.io.FileUtils {
      *
      * @param oldFile
      * @param newFile
-     *
-     * @return
      */
     public static boolean isFileEqual(File oldFile, File newFile) {
-
         try {
-
             return contentEquals(oldFile, newFile);
-
         } catch (IOException e) {
-
             logger.warn(e.toString());
             return false;
         }

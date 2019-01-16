@@ -10,11 +10,7 @@ import java.nio.channels.FileLock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * OsUtil
- *
- * @author knightliao
- */
+
 public final class OsUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(OsUtil.class);
@@ -25,32 +21,17 @@ public final class OsUtil {
 
     /**
      * 建多层目录
-     *
-     * @param filePath
-     *
-     * @return boolean
-     *
-     * @throws
-     * @Description: make directory
      */
     public static boolean makeDirs(final String filePath) {
         File f = new File(filePath);
         if (!f.exists()) {
             return f.mkdirs();
         }
-
         return true;
     }
 
     /**
-     * @param filePathString
-     *
-     * @return boolean
-     *
-     * @throws Exception
-     * @Description: 文件或目录是否存在
-     * @author liaoqiqi
-     * @date 2013-6-13
+     * 文件或目录是否存在
      */
     public static boolean isFileExist(final String filePathString) throws Exception {
 
@@ -58,16 +39,6 @@ public final class OsUtil {
         return f.exists();
     }
 
-    /**
-     * @param pathElements
-     *
-     * @return boolean
-     *
-     * @throws Exception
-     * @Description: JOIN PATH
-     * @author liaoqiqi
-     * @date 2013-6-13
-     */
     public static String pathJoin(final String... pathElements) {
 
         final String path;
@@ -115,14 +86,7 @@ public final class OsUtil {
     }
 
     /**
-     * @param src
-     * @param dest
-     *
-     * @return void
-     *
-     * @Description: 转移文件
-     * @author liaoqiqi
-     * @date 2013-6-20
+     * 转移文件
      */
     public static void transferFile(File src, File dest) throws Exception {
 
@@ -138,14 +102,7 @@ public final class OsUtil {
     }
 
     /**
-     * @param src
-     * @param dest
-     *
-     * @return void
-     *
-     * @Description: 具有重试机制的 ATOM 转移文件 ，并且会校验文件是否一致 才替换
-     * @author liaoqiqi
-     * @date 2013-6-20
+     * 具有重试机制的 ATOM 转移文件 ，并且会校验文件是否一致 才替换
      */
     public static void transferFileAtom(File src, File dest, boolean isDeleteSource) throws Exception {
 
