@@ -9,21 +9,13 @@ import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * ZK打印
- *
- * @author liaoqiqi
- * @version 2014-7-7
- */
+
 public class PrintZookeeperTree extends ConnectionWatcher {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(PrintZookeeperTree.class);
 
     private static final Charset CHARSET = Charset.forName("UTF-8");
 
-    /**
-     * @param
-     */
     public PrintZookeeperTree() {
         super(true);
     }
@@ -31,9 +23,7 @@ public class PrintZookeeperTree extends ConnectionWatcher {
     public void list(String groupName) throws KeeperException, InterruptedException {
 
         try {
-
             StringBuffer sb = new StringBuffer();
-
             int pathLength = StringUtils.countMatches(groupName, "/");
             for (int i = 0; i < pathLength - 1; ++i) {
                 sb.append("\t");
