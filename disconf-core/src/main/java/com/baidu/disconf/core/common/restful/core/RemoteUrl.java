@@ -10,9 +10,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 远程对象URL表示，包括Host地址 和 URL
- *
- * @author liaoqiqi
- * @version 2014-6-10
  */
 public class RemoteUrl {
 
@@ -29,18 +26,14 @@ public class RemoteUrl {
         this.serverList = serverList;
 
         for (String server : serverList) {
-
             try {
-
                 if (!server.startsWith("http://")) {
                     if (server.startsWith("https://")) {
                     } else {
                         server = "http://" + server;
                     }
                 }
-
                 urls.add(new URL(server + url));
-
             } catch (MalformedURLException e) {
                 LOGGER.error(e.toString());
             }
@@ -64,7 +57,6 @@ public class RemoteUrl {
     }
 
     public List<URL> getUrls() {
-
         return urls;
     }
 
@@ -72,5 +64,4 @@ public class RemoteUrl {
     public String toString() {
         return "RemoteUrl [url=" + url + ", serverList=" + serverList + ", urls=" + urls + "]";
     }
-
 }
