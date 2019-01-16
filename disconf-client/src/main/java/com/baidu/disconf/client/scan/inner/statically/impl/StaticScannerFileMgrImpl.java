@@ -29,28 +29,18 @@ import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
 
 /**
  * 配置文件的静态扫描
- *
- * @author liaoqiqi
- * @version 2014-9-9
  */
 public class StaticScannerFileMgrImpl extends StaticScannerMgrImplBase implements StaticScannerMgr {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(StaticScannerFileMgrImpl.class);
 
-    /**
-     *
-     */
     @Override
     public void scanData2Store(ScanStaticModel scanModel) {
-
         // 转换配置文件
         List<DisconfCenterBaseModel> disconfCenterFiles = getDisconfFiles(scanModel);
         DisconfStoreProcessorFactory.getDisconfStoreFileProcessor().transformScanData(disconfCenterFiles);
     }
 
-    /**
-     *
-     */
     @Override
     public void exclude(Set<String> keySet) {
         DisconfStoreProcessorFactory.getDisconfStoreFileProcessor().exclude(keySet);
