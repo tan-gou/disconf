@@ -76,30 +76,24 @@ public class StaticScannerFileMgrImpl extends StaticScannerMgrImplBase implement
 
         DisconfCenterFile disconfCenterFile = new DisconfCenterFile();
 
-        //
-        // class
+        // 加了 @DisconfFile 注解的类 class
         disconfCenterFile.setCls(disconfFileClass);
 
         DisconfFile disconfFileAnnotation = disconfFileClass.getAnnotation(DisconfFile.class);
 
-        //
-        // file name
+        // 配置文件名
         disconfCenterFile.setFileName(disconfFileAnnotation.filename());
-
-        // config file target dir path
+        // 配置文件路径，默认 classpath
         disconfCenterFile.setTargetDirPath(disconfFileAnnotation.targetDirPath().trim());
-
-        // file type
+        // 配置文件类型
         disconfCenterFile.setSupportFileTypeEnum(SupportFileTypeEnum.getByFileName(disconfFileAnnotation.filename()));
 
-        //
         // disConfCommonModel
-        DisConfCommonModel disConfCommonModel =
-                makeDisConfCommonModel(disconfFileAnnotation.app(), disconfFileAnnotation.env(), disconfFileAnnotation
-                        .version());
+        DisConfCommonModel disConfCommonModel = makeDisConfCommonModel(disconfFileAnnotation.app(),
+                disconfFileAnnotation.env(), disconfFileAnnotation.version());
         disconfCenterFile.setDisConfCommonModel(disConfCommonModel);
 
-        // Remote URL
+        // 配置文件远程下载地址：urlPrefix/file?app=app&version=version&env=env&key=key&type=0
         String url = DisconfWebPathMgr.getRemoteUrlParameter(DisClientSysConfig.getInstance().CONF_SERVER_STORE_ACTION,
                 disConfCommonModel.getApp(),
                 disConfCommonModel.getVersion(),
@@ -113,40 +107,32 @@ public class StaticScannerFileMgrImpl extends StaticScannerMgrImplBase implement
 
         //
         // KEY & VALUE
-        //
         Map<String, FileItemValue> keyMaps = new HashMap<String, FileItemValue>();
 
         for (Method method : methods) {
-
             // 获取指定的域
             Field field = MethodUtils.getFieldFromMethod(method, expectedFields, DisConfigTypeEnum.FILE);
             if (field == null) {
                 continue;
             }
 
-            //
             DisconfFileItem disconfFileItem = method.getAnnotation(DisconfFileItem.class);
             String keyName = disconfFileItem.name();
 
             // access
             field.setAccessible(true);
-
             // get setter method
             Method setterMethod = MethodUtils.getSetterMethodFromField(disconfFileClass, field);
 
             // static 则直接获取其值
             if (Modifier.isStatic(field.getModifiers())) {
-
                 try {
                     FileItemValue fileItemValue = new FileItemValue(field.get(null), field, setterMethod);
                     keyMaps.put(keyName, fileItemValue);
-
                 } catch (Exception e) {
                     LOGGER.error(e.toString());
                 }
-
             } else {
-
                 // 非static则为Null, 这里我们没有必要获取其Bean的值
                 FileItemValue fileItemValue = new FileItemValue(null, field, setterMethod);
                 keyMaps.put(keyName, fileItemValue);
