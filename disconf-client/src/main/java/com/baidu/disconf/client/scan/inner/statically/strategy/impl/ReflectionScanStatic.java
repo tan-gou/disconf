@@ -36,8 +36,6 @@ import com.baidu.disconf.client.scan.inner.statically.strategy.ScanStaticStrateg
 import com.google.common.base.Predicate;
 
 /**
- * Created by knightliao on 15/1/23.
- * <p/>
  * 扫描静态注解，并且进行分析整合数据
  * <p/>
  * 使用 Reflection Lib
@@ -66,11 +64,7 @@ public class ReflectionScanStatic implements ScanStaticStrategy {
      */
     private Reflections getReflection(List<String> packNameList) {
 
-        //
-        // filter
-        //
         FilterBuilder filterBuilder = new FilterBuilder().includePackage(Constants.DISCONF_PACK_NAME);
-
         for (String packName : packNameList) {
             filterBuilder = filterBuilder.includePackage(packName);
         }
@@ -135,9 +129,7 @@ public class ReflectionScanStatic implements ScanStaticStrategy {
                 Set<Method> fieldSet = disconfFileItemMap.get(thisClass);
                 fieldSet.add(method);
                 disconfFileItemMap.put(thisClass, fieldSet);
-
             } else {
-
                 LOGGER.error("cannot find CLASS ANNOTATION " + DisconfFile.class.getName()
                         + " for disconf file item: " +
                         method.toString());
@@ -216,8 +208,7 @@ public class ReflectionScanStatic implements ScanStaticStrategy {
 
         // update pipeline
         Set<Class<? extends IDisconfUpdatePipeline>> iDisconfUpdatePipeline = reflections.getSubTypesOf
-                (IDisconfUpdatePipeline
-                        .class);
+                (IDisconfUpdatePipeline.class);
         if (iDisconfUpdatePipeline != null && iDisconfUpdatePipeline.size() != 0) {
             scanModel.setiDisconfUpdatePipeline((Class<IDisconfUpdatePipeline>) iDisconfUpdatePipeline
                     .toArray()[0]);
