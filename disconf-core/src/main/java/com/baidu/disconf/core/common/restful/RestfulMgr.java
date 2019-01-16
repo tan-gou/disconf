@@ -4,9 +4,6 @@ import com.baidu.disconf.core.common.restful.core.RemoteUrl;
 
 /**
  * Restful 抓取工具
- *
- * @author liaoqiqi
- * @version 2014-7-29
  */
 public interface RestfulMgr {
 
