@@ -14,23 +14,18 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by knightliao on 16/1/7.
- */
+
 public class HttpClientUtil {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(HttpClientUtil.class);
 
-    /**
-     * 连接器
-     */
     protected static CloseableHttpClient httpclient;
 
-    /**
-     * 初始化httpclient对象
-     */
-    private static void buildHttpClient() {
+    public static void init() {
+        buildHttpClient();
+    }
 
+    private static void buildHttpClient() {
         RequestConfig globalConfig =
                 RequestConfig.custom().setConnectTimeout(5000)
                         .setSocketTimeout(5000).build();
@@ -42,8 +37,6 @@ public class HttpClientUtil {
 
     /**
      * 处理具体代理请求执行, 入口方法
-     *
-     * @throws Exception
      */
     public static <T> T execute(HttpRequestBase request, HttpResponseCallbackHandler<T> responseHandler)
             throws Exception {
@@ -51,7 +44,6 @@ public class HttpClientUtil {
         CloseableHttpResponse httpclientResponse = null;
 
         try {
-
             if (LOGGER.isDebugEnabled()) {
                 Header[] headers = request.getAllHeaders();
                 for (Header header : headers) {
@@ -67,7 +59,6 @@ public class HttpClientUtil {
                 }
             }
 
-            // 填充状态码
             int statusCode = httpclientResponse.getStatusLine().getStatusCode();
 
             String requestBody = null;
@@ -81,11 +72,9 @@ public class HttpClientUtil {
             LOGGER.info("execute http request [{}], status code [{}]", requestBody, statusCode);
 
             if (statusCode != 200) {
-                throw new Exception("execute  request failed [" + requestBody + "], statusCode [" + statusCode
-                        + "]");
+                throw new Exception("execute  request failed [" + requestBody + "], statusCode [" + statusCode + "]");
             }
 
-            // 处理响应体
             HttpEntity entity = httpclientResponse.getEntity();
             if (entity != null && responseHandler != null) {
                 return responseHandler.handleResponse(requestBody, entity);
@@ -94,7 +83,6 @@ public class HttpClientUtil {
             }
 
             return null;
-
         } catch (Exception e) {
             throw e;
         } finally {
@@ -107,15 +95,7 @@ public class HttpClientUtil {
         }
     }
 
-    /**
-     * @return void
-     *
-     * @Description：关闭
-     * @author liaoqiqi
-     * @date 2013-6-16
-     */
     public static void close() {
-
         if (httpclient != null) {
             try {
                 httpclient.close();
@@ -125,8 +105,6 @@ public class HttpClientUtil {
         }
     }
 
-    public static void init() {
-        buildHttpClient();
-    }
+
 
 }
