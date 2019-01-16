@@ -2,9 +2,6 @@ package com.baidu.disconf.client.core.processor;
 
 /**
  * 处理算子
- *
- * @author liaoqiqi
- * @version 2014-8-4
  */
 public interface DisconfCoreProcessor {
 
