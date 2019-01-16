@@ -9,9 +9,6 @@ import com.baidu.disconf.core.common.restful.RestfulMgr;
 
 /**
  * 抓取器工厂
- *
- * @author liaoqiqi
- * @version 2014-7-29
  */
 public class FetcherFactory {
 
