@@ -10,9 +10,6 @@ import com.baidu.disconf.client.store.processor.model.DisconfValue;
 
 /**
  * 仓库算子
- *
- * @author liaoqiqi
- * @version 2014-8-4
  */
 public interface DisconfStoreProcessor {
 
@@ -27,7 +24,7 @@ public interface DisconfStoreProcessor {
     Set<String> getConfKeySet();
 
     /**
-     * 增加回调函数
+     * 增加 配置更新时 回调函数
      */
     void addUpdateCallbackList(String keyName, List<IDisconfUpdate> iDisconfUpdateList);
 
