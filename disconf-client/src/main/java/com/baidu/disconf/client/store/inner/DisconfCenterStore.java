@@ -14,25 +14,18 @@ import com.baidu.disconf.client.common.update.IDisconfUpdatePipeline;
 
 /**
  * 配置仓库,是个单例
- *
- * @author liaoqiqi
- * @version 2014-6-9
  */
 public class DisconfCenterStore {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(DisconfCenterStore.class);
 
     private DisconfCenterStore() {
-
     }
 
     /**
-     * 类级的内部类，也就是静态的成员式内部类，该内部类的实例与外部类的实例 没有绑定关系，而且只有被调用到时才会装载，从而实现了延迟加载。
+     * 静态初始化器，由JVM来保证线程安全，被调用到时才会装载，从而实现了延迟加载。
      */
     private static class SingletonHolder {
-        /**
-         * 静态初始化器，由JVM来保证线程安全
-         */
         private static DisconfCenterStore instance = new DisconfCenterStore();
     }
 
@@ -40,20 +33,19 @@ public class DisconfCenterStore {
         return SingletonHolder.instance;
     }
 
-    // 每个配置文件一条
-    // key: 配置文件名
-    // value: 配置文件数据
+    /**
+     * 每个配置文件一条: key: 配置文件名  value: 配置文件数据
+     */
     private Map<String, DisconfCenterFile> confFileMap = new HashMap<String, DisconfCenterFile>();
 
-    // 每个配置Item一条
-    // key: 配置项的Key
-    // value: 配置项数据
+    /**
+     * 每个配置Item一条: key: 配置项的Key value: 配置项数据
+     */
     private Map<String, DisconfCenterItem> confItemMap = new HashMap<String, DisconfCenterItem>();
 
-    // 主备切换时的Key列表
+    /** 主备切换时的Key列表 */
     private List<String> activeBackupKeyList;
 
-    //
     private IDisconfUpdatePipeline iDisconfUpdatePipeline = null;
 
     // 标识本机器名
@@ -67,9 +59,7 @@ public class DisconfCenterStore {
         DisconfCenterFile disconfCenterFile = (DisconfCenterFile) disconfCenterBaseModel;
 
         String fileName = disconfCenterFile.getFileName();
-
         if (confFileMap.containsKey(fileName)) {
-
             LOGGER.warn("There are two same fileName key!!!! " + fileName);
             DisconfCenterFile existCenterFile = confFileMap.get(fileName);
 
@@ -77,7 +67,6 @@ public class DisconfCenterStore {
             if (disconfCenterFile.isTaggedWithNonAnnotationFile()) {
                 existCenterFile.setIsTaggedWithNonAnnotationFile(true);
             }
-
         } else {
             confFileMap.put(fileName, disconfCenterFile);
         }
@@ -91,9 +80,7 @@ public class DisconfCenterStore {
         DisconfCenterItem disconfCenterItem = (DisconfCenterItem) disconfCenterBaseModel;
 
         String key = disconfCenterItem.getKey();
-
         if (confItemMap.containsKey(key)) {
-
             LOGGER.error("There are two same item key!!!! " + "first: " + confItemMap.get(key).getClass().toString() +
                     ", Second: " + disconfCenterItem.getClass().toString());
         } else {
@@ -105,7 +92,6 @@ public class DisconfCenterStore {
      * 删除一个配置项
      */
     public void excludeOneItem(String key) {
-
         if (confItemMap.containsKey(key)) {
             confItemMap.remove(key);
         }
