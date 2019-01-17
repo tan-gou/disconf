@@ -11,9 +11,7 @@ import com.baidu.disconf.client.core.filetype.impl.DisconfAnyFileProcessorImpl;
 import com.baidu.disconf.client.core.filetype.impl.DisconfPropertiesProcessorImpl;
 import com.baidu.disconf.client.core.filetype.impl.DisconfXmlProcessorImpl;
 
-/**
- * @author knightliao
- */
+
 public class FileTypeProcessorUtils {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(FileTypeProcessorUtils.class);
@@ -26,35 +24,23 @@ public class FileTypeProcessorUtils {
 
         DisconfFileTypeProcessor disconfFileTypeProcessor;
 
-        //
-        // 获取数据
-        //
         Map<String, Object> dataMap;
 
         if (supportFileTypeEnum.equals(SupportFileTypeEnum.PROPERTIES)) {
-
             disconfFileTypeProcessor = new DisconfPropertiesProcessorImpl();
-
         } else if (supportFileTypeEnum.equals(SupportFileTypeEnum.XML)) {
-
             disconfFileTypeProcessor = new DisconfXmlProcessorImpl();
-
         } else {
-
             disconfFileTypeProcessor = new DisconfAnyFileProcessorImpl();
         }
 
         dataMap = disconfFileTypeProcessor.getKvMap(fileName);
-
         if (dataMap == null) {
             dataMap = new HashMap<String, Object>();
         }
 
-        //
         // 进行数据过滤
-        //
         for (String key : dataMap.keySet()) {
-
             if (key == null) {
                 continue;
             }
