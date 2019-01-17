@@ -9,8 +9,6 @@ import com.baidu.disconf.client.support.utils.ConfigLoaderUtils;
 
 /**
  * Properties 处理器
- *
- * @author knightliao
  */
 public class DisconfPropertiesProcessorImpl implements DisconfFileTypeProcessor {
 
