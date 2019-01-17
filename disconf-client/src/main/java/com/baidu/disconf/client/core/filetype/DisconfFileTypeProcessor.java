@@ -4,8 +4,6 @@ import java.util.Map;
 
 /**
  * 文件类型处理器
- *
- * @author knightliao
  */
 public interface DisconfFileTypeProcessor {
 
