@@ -15,9 +15,6 @@ import com.baidu.disconf.client.watch.WatchMgr;
 
 /**
  * 核心处理器
- *
- * @author liaoqiqi
- * @version 2014-6-10
  */
 public class DisconfCoreMgrImpl implements DisconfCoreMgr {
 
@@ -31,7 +28,6 @@ public class DisconfCoreMgrImpl implements DisconfCoreMgr {
     // 抓取器
     private FetcherMgr fetcherMgr = null;
 
-    // registry
     private Registry registry = null;
 
     public DisconfCoreMgrImpl(WatchMgr watchMgr, FetcherMgr fetcherMgr, Registry registry) {
@@ -40,9 +36,7 @@ public class DisconfCoreMgrImpl implements DisconfCoreMgr {
         this.fetcherMgr = fetcherMgr;
         this.registry = registry;
 
-        //
         // 在这里添加好配置项、配置文件的处理器
-        //
         DisconfCoreProcessor disconfCoreProcessorFile =
                 DisconfCoreProcessorFactory.getDisconfCoreProcessorFile(watchMgr, fetcherMgr, registry);
         disconfCoreProcessorList.add(disconfCoreProcessorFile);
@@ -54,18 +48,13 @@ public class DisconfCoreMgrImpl implements DisconfCoreMgr {
 
     /**
      * 1. 获取远程的所有配置数据<br/>
-     * 2. 注入到仓库中<br/>
+     * 2. 注入到仓库中 <br/>
      * 3. Watch 配置 <br/>
      * <p/>
      * 更新 所有配置数据
      */
     public void process() {
-
-        //
-        // 处理
-        //
         for (DisconfCoreProcessor disconfCoreProcessor : disconfCoreProcessorList) {
-
             disconfCoreProcessor.processAllItems();
         }
     }
@@ -86,12 +75,7 @@ public class DisconfCoreMgrImpl implements DisconfCoreMgr {
      * 特殊的，将仓库里的数据注入到 配置项、配置文件 的实体中
      */
     public void inject2DisconfInstance() {
-
-        //
-        // 处理
-        //
         for (DisconfCoreProcessor disconfCoreProcessor : disconfCoreProcessorList) {
-
             disconfCoreProcessor.inject2Conf();
         }
     }

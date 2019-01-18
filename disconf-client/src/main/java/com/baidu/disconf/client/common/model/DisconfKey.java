@@ -4,9 +4,6 @@ import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 
 /**
  * 用于标识一个配置文件或配置项
- *
- * @author liaoqiqi
- * @version 2014-8-4
  */
 public class DisconfKey {
 

@@ -27,9 +27,6 @@ import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 
 /**
  * 动态扫描 与 Store模块的转换器
- *
- * @author liaoqiqi
- * @version 2014-6-18
  */
 public class ScanDynamicStoreAdapter {
 
@@ -65,24 +62,20 @@ public class ScanDynamicStoreAdapter {
             DisconfUpdateService disconfUpdateService =
                     disconfUpdateServiceClass.getAnnotation(DisconfUpdateService.class);
 
-            //
             // 校验是否有继承正确,是否继承IDisconfUpdate
             if (!ScanVerify.hasIDisconfUpdate(disconfUpdateServiceClass)) {
                 continue;
             }
 
-            //
             // 获取回调接口实例
             IDisconfUpdate iDisconfUpdate = getIDisconfUpdateInstance(disconfUpdateServiceClass, registry);
             if (iDisconfUpdate == null) {
                 continue;
             }
 
-            //
             // 配置项
             processItems(inverseMap, disconfUpdateService, iDisconfUpdate);
 
-            //
             // 配置文件
             processFiles(inverseMap, disconfUpdateService, iDisconfUpdate);
 
@@ -116,7 +109,6 @@ public class ScanDynamicStoreAdapter {
 
         // 反索引
         for (String key : itemKeys) {
-
             DisconfKey disconfKey = new DisconfKey(DisConfigTypeEnum.ITEM, key);
             addOne2InverseMap(disconfKey, inverseMap, iDisconfUpdate);
         }

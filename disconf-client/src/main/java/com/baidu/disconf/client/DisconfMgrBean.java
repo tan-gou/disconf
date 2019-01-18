@@ -20,9 +20,6 @@ import com.baidu.disconf.client.support.utils.StringUtil;
 
 /**
  * 第一次扫描，静态扫描
- *
- * @author liaoqiqi
- * @version 2014-6-17
  */
 public class DisconfMgrBean implements BeanDefinitionRegistryPostProcessor, PriorityOrdered, ApplicationContextAware {
 
@@ -33,7 +30,6 @@ public class DisconfMgrBean implements BeanDefinitionRegistryPostProcessor, Prio
     private String scanPackage = null;
 
     public void destroy() {
-
         DisconfMgr.getInstance().close();
     }
 

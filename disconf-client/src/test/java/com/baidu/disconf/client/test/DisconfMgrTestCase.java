@@ -36,9 +36,6 @@ import mockit.MockUp;
 
 /**
  * 一个Demo示例, 远程的下载服务器使用WireMOck, Watch模块使用Jmockit
- *
- * @author liaoqiqi
- * @version 2014-6-10
  */
 public class DisconfMgrTestCase extends BaseSpringMockTestCase implements ApplicationContextAware {
 

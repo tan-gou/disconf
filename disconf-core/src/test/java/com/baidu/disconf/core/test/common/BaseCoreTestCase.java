@@ -18,10 +18,7 @@ import com.baidu.disconf.core.common.utils.GsonUtils;
 import com.baidu.disconf.core.test.restful.RemoteMockServer;
 import com.github.tomakehurst.wiremock.junit.WireMockClassRule;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-11
- */
+
 public class BaseCoreTestCase {
 
     @ClassRule

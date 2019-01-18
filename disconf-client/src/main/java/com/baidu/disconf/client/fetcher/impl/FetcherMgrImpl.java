@@ -16,9 +16,6 @@ import com.baidu.disconf.core.common.utils.OsUtil;
 
 /**
  * 抓取器, 独立模块，不依赖外部模块, 由Factory来管理此实例
- *
- * @author liaoqiqi
- * @version 2014-7-29
  */
 public class FetcherMgrImpl implements FetcherMgr {
 
@@ -45,13 +42,10 @@ public class FetcherMgrImpl implements FetcherMgr {
     // result tool
     private RestfulMgr restfulMgr = null;
 
-    //
-    // 创建对象
-    //
+    /** 构造函数 */
     public FetcherMgrImpl(RestfulMgr restfulMgr, int retryTime, int retrySleepSeconds,
-                          boolean enableLocalDownloadDirInClassPath, String localDownloadDir, String
-                                  localDownloadDirTemp, List<String>
-                                  hostList) {
+                          boolean enableLocalDownloadDirInClassPath, String localDownloadDir,
+                          String localDownloadDirTemp, List<String> hostList) {
 
         this.restfulMgr = restfulMgr;
 
@@ -85,8 +79,6 @@ public class FetcherMgrImpl implements FetcherMgr {
 
     /**
      * 下载配置文件, remoteUrl是 url
-     *
-     * @throws Exception
      */
     public String downloadFileFromServer(String url, String fileName, String targetFileDir) throws Exception {
 
@@ -97,33 +89,28 @@ public class FetcherMgrImpl implements FetcherMgr {
         RemoteUrl remoteUrl = new RemoteUrl(url, hostList);
 
         // 下载
-        return restfulMgr
-                .downloadFromServer(remoteUrl, fileName, localDir, localDownloadDirTemp, targetFileDir,
+        return restfulMgr.downloadFromServer(remoteUrl, fileName, localDir, localDownloadDirTemp, targetFileDir,
                         enableLocalDownloadDirInClassPath,
-                        retryTime,
-                        retrySleepSeconds);
-
+                        retryTime, retrySleepSeconds);
     }
 
-    /**
-     * 获取本地下载的路径DIR, 通过参数判断是否是临时路径
-     *
-     * @throws Exception
-     */
-    private String getLocalDownloadDirPath() throws Exception {
 
-        String localUrl = localDownloadDir;
-
-        if (!new File(localUrl).exists()) {
-            new File(localUrl).mkdirs();
-        }
-
-        return localUrl;
-    }
 
     @Override
     public void release() {
-
         restfulMgr.close();
+    }
+
+
+    /**
+     * 获取本地下载的路径DIR, 通过参数判断是否是临时路径
+     */
+    private String getLocalDownloadDirPath() {
+
+        String localUrl = localDownloadDir;
+        if (!new File(localUrl).exists()) {
+            new File(localUrl).mkdirs();
+        }
+        return localUrl;
     }
 }

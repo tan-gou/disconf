@@ -55,7 +55,6 @@ public class ReloadablePropertiesFactoryBean extends PropertiesFactoryBean imple
         List<Resource> resources = new ArrayList<Resource>();
         for (String filename : fileNames) {
 
-            // trim
             filename = filename.trim();
 
             String realFileName = getFileName(filename);
@@ -91,10 +90,7 @@ public class ReloadablePropertiesFactoryBean extends PropertiesFactoryBean imple
 
     /**
      * get file name from resource
-     *
-     * @param fileName
-     *
-     * @return
+     *   eg: file:haibingcao/tmp/config.properties
      */
     private String getFileName(String fileName) {
 
@@ -103,16 +99,13 @@ public class ReloadablePropertiesFactoryBean extends PropertiesFactoryBean imple
             if (index < 0) {
                 return fileName;
             } else {
-
                 fileName = fileName.substring(index + 1);
-
                 index = fileName.lastIndexOf('/');
                 if (index < 0) {
                     return fileName;
                 } else {
                     return fileName.substring(index + 1);
                 }
-
             }
         }
         return null;

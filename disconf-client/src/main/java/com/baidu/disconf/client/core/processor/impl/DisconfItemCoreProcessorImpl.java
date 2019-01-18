@@ -19,9 +19,6 @@ import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 
 /**
  * 配置项处理器实现
- *
- * @author liaoqiqi
- * @version 2014-8-4
  */
 public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
 
@@ -45,12 +42,9 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
         this.watchMgr = watchMgr;
     }
 
-    /**
-     *
-     */
+
     @Override
     public void processAllItems() {
-
         /**
          * 配置ITEM列表处理
          */
@@ -80,10 +74,8 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
 
         DisconfCenterItem disconfCenterItem = (DisconfCenterItem) disconfStoreProcessor.getConfData(keyName);
         if (disconfCenterItem != null) {
-
             // 更新仓库
             updateOneConfItem(keyName, disconfCenterItem);
-
             // 更新实例
             inject2OneConf(keyName, disconfCenterItem);
         }
@@ -100,13 +92,8 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
 
         String value = null;
 
-        //
         // 开启disconf才需要远程下载, 否则就用默认值
-        //
         if (DisClientConfig.getInstance().ENABLE_DISCONF) {
-            //
-            // 下载配置
-            //
             try {
                 String url = disconfCenterItem.getRemoteServerUrl();
                 value = fetcherMgr.getValueFromServer(url);
@@ -120,15 +107,11 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
             LOGGER.debug("download ok.");
         }
 
-        //
         // 注入到仓库中
-        //
         disconfStoreProcessor.inject2Store(keyName, new DisconfValue(value, null));
         LOGGER.debug("inject ok.");
 
-        //
         // Watch
-        //
         if (DisClientConfig.getInstance().ENABLE_DISCONF) {
             if (watchMgr != null) {
                 DisConfCommonModel disConfCommonModel = disconfStoreProcessor.getCommonModel(keyName);
@@ -141,12 +124,11 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
     }
 
     /**
-     * 更新消息:
+     * 更新配置
      */
     @Override
     public void updateOneConfAndCallback(String key) throws Exception {
 
-        // 更新 配置
         updateOneConf(key);
 
         // 回调
@@ -203,9 +185,7 @@ public class DisconfItemCoreProcessorImpl implements DisconfCoreProcessor {
         }
     }
 
-    /**
-     *
-     */
+
     @Override
     public void inject2Conf() {
 

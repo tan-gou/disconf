@@ -7,21 +7,11 @@ public interface IDisconfUpdatePipeline {
 
     /**
      * 配置文件
-     *
-     * @param key
-     * @param filePath
-     *
-     * @throws Exception
      */
     void reloadDisconfFile(String key, String filePath) throws Exception;
 
     /**
      * 配置项
-     *
-     * @param key
-     * @param content
-     *
-     * @throws Exception
      */
     void reloadDisconfItem(String key, Object content) throws Exception;
 }

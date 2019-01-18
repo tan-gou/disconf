@@ -9,9 +9,6 @@ import java.lang.annotation.Target;
 /**
  * 标识配置更新时需要进行更新的服务,需要指定它影响的配置数据，<br/>
  * 可以是配置文件或者是配置项
- *
- * @author liaoqiqi
- * @version 2014-5-16
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

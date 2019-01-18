@@ -10,15 +10,11 @@ import com.baidu.disconf.client.common.update.IDisconfUpdatePipeline;
 
 /**
  * 扫描静态存储的对象
- *
- * @author liaoqiqi
- * @version 2014-6-9
  */
 public class ScanStaticModel {
 
     private Reflections reflections;
 
-    //
     // 配置文件
     private Set<Class<?>> disconfFileClassSet;
 

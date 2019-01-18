@@ -9,12 +9,9 @@ import com.baidu.disconf.client.common.annotations.DisconfUpdateService;
 import com.baidu.disconf.client.common.update.IDisconfUpdate;
 
 /**
- * 分布式配置服务回调函数<br/>
- * <p/>
- * 1. 使用了分布式配置文件 @DisconfUpdateService
+ * 分布式配置服务回调函数
  *
- * @author liaoqiqi
- * @version 2014-5-22
+ * 1. 使用了分布式配置文件 @DisconfUpdateService
  */
 @Service
 @DisconfUpdateService(classes = {ConfA.class})
@@ -25,9 +22,6 @@ public class ServiceA2UpdateCallback implements IDisconfUpdate {
     @Autowired
     private ServiceA serviceA;
 
-    /**
-     *
-     */
     public void reload() throws Exception {
 
         LOGGER.info(String.valueOf(serviceA.calcMoneyA2()));

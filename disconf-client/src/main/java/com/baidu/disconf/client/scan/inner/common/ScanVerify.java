@@ -9,9 +9,6 @@ import com.baidu.disconf.client.common.update.IDisconfUpdate;
 
 /**
  * 扫描校验模块
- *
- * @author liaoqiqi
- * @version 2014-6-15
  */
 public class ScanVerify {
 

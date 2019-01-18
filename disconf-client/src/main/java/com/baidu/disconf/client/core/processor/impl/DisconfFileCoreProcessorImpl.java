@@ -24,9 +24,6 @@ import com.baidu.disconf.core.common.utils.GsonUtils;
 
 /**
  * 配置文件处理器实现
- *
- * @author liaoqiqi
- * @version 2014-8-4
  */
 public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
 
@@ -45,35 +42,29 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
     private Registry registry = null;
 
     public DisconfFileCoreProcessorImpl(WatchMgr watchMgr, FetcherMgr fetcherMgr, Registry registry) {
-
         this.fetcherMgr = fetcherMgr;
         this.watchMgr = watchMgr;
         this.registry = registry;
     }
 
-    /**
-     *
-     */
+
     @Override
     public void processAllItems() {
-
         /**
          * 配置文件列表处理
          */
         for (String fileName : disconfStoreProcessor.getConfKeySet()) {
-
             processOneItem(fileName);
         }
     }
 
+
     @Override
     public void processOneItem(String key) {
 
-        LOGGER.debug("==============\tstart to process disconf file: " + key +
-                "\t=============================");
+        LOGGER.debug("===========\tstart to process disconf file: " + key + "\t==========");
 
         DisconfCenterFile disconfCenterFile = (DisconfCenterFile) disconfStoreProcessor.getConfData(key);
-
         try {
             updateOneConfFile(key, disconfCenterFile);
         } catch (Exception e) {
@@ -91,30 +82,17 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
         }
 
         String filePath = fileName;
-        Map<String, Object> dataMap = new HashMap<String, Object>();
+        Map<String, Object> fileDataMap = new HashMap<String, Object>();
 
-        //
         // 开启disconf才需要远程下载, 否则就本地就好
-        //
         if (DisClientConfig.getInstance().ENABLE_DISCONF) {
-
-            //
-            // 下载配置
-            //
             try {
-
                 String url = disconfCenterFile.getRemoteServerUrl();
                 filePath = fetcherMgr.downloadFileFromServer(url, fileName, disconfCenterFile.getFileDir());
-
             } catch (Exception e) {
-
-                //
                 // 下载失败了, 尝试使用本地的配置
-                //
-
                 LOGGER.error(e.toString(), e);
                 LOGGER.warn("using local properties in class path: " + fileName);
-
                 // change file path
                 filePath = fileName;
             }
@@ -122,25 +100,21 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
         }
 
         try {
-            dataMap = FileTypeProcessorUtils.getKvMap(disconfCenterFile.getSupportFileTypeEnum(),
-                    disconfCenterFile.getFilePath());
+            fileDataMap = FileTypeProcessorUtils.getKvMap(disconfCenterFile.getSupportFileTypeEnum(),
+                            disconfCenterFile.getFilePath());
         } catch (Exception e) {
             LOGGER.error("cannot get kv data for " + filePath, e);
         }
 
-        //
         // 注入到仓库中
-        //
-        disconfStoreProcessor.inject2Store(fileName, new DisconfValue(null, dataMap));
+        disconfStoreProcessor.inject2Store(fileName, new DisconfValue(null, fileDataMap));
         LOGGER.debug("inject ok.");
 
         //
         // 开启disconf才需要进行watch
         //
         if (DisClientConfig.getInstance().ENABLE_DISCONF) {
-            //
-            // Watch
-            //
+
             DisConfCommonModel disConfCommonModel = disconfStoreProcessor.getCommonModel(fileName);
             if (watchMgr != null) {
                 watchMgr.watchPath(this, disConfCommonModel, fileName, DisConfigTypeEnum.FILE,
@@ -160,15 +134,13 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
 
         // 更新 配置
         updateOneConf(key);
-
         // 回调
         DisconfCoreProcessUtils.callOneConf(disconfStoreProcessor, key);
+        // 通用型的配置更新接口（默认实现只作了打印操作，用户可自定义扩展）
         callUpdatePipeline(key);
     }
 
-    /**
-     * @param key
-     */
+
     private void callUpdatePipeline(String key) {
 
         Object object = disconfStoreProcessor.getConfData(key);
@@ -193,19 +165,17 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
     private void updateOneConf(String fileName) throws Exception {
 
         DisconfCenterFile disconfCenterFile = (DisconfCenterFile) disconfStoreProcessor.getConfData(fileName);
-
         if (disconfCenterFile != null) {
-
-            // 更新仓库
+            // 下载更改后的最新的配置文件，并更新配置仓库 Map<String, FileItemValue> keyMaps
             updateOneConfFile(fileName, disconfCenterFile);
-
-            // 更新实例
+            // 更新实例类中的属性值
             inject2OneConf(fileName, disconfCenterFile);
         }
     }
 
+
     /**
-     * 为某个配置文件进行注入实例中
+     * 配置注入实体中
      */
     private void inject2OneConf(String fileName, DisconfCenterFile disconfCenterFile) {
 
@@ -214,28 +184,20 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
         }
 
         try {
-
-            //
-            // 获取实例
-            //
-
             Object object;
             try {
-
+                // 获取实例
                 object = disconfCenterFile.getObject();
                 if (object == null) {
                     object = registry.getFirstByType(disconfCenterFile.getCls(), false, true);
                 }
-
             } catch (Exception e) {
-
                 LOGGER.error(e.toString());
                 object = null;
             }
 
             // 注入实体中
             disconfStoreProcessor.inject2Instance(object, fileName);
-
         } catch (Exception e) {
             LOGGER.warn(e.toString(), e);
         }
@@ -251,7 +213,6 @@ public class DisconfFileCoreProcessorImpl implements DisconfCoreProcessor {
 
             LOGGER.debug("==============\tstart to inject value to disconf file item instance: " + key +
                     "\t=============================");
-
             DisconfCenterFile disconfCenterFile = (DisconfCenterFile) disconfStoreProcessor.getConfData(key);
 
             inject2OneConf(key, disconfCenterFile);

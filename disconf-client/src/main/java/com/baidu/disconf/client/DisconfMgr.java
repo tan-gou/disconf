@@ -21,19 +21,15 @@ import com.baidu.disconf.client.support.registry.RegistryFactory;
 
 /**
  * Disconf Client 总入口
- *
- * @author liaoqiqi
- * @version 2014-5-23
  */
 public class DisconfMgr implements ApplicationContextAware {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(DisconfMgr.class);
 
     // 本实例不能初始化两次
-    private boolean isFirstInit = false;
-    private boolean isSecondInit = false;
+    private boolean isFirstInitDone = false;
+    private boolean isSecondInitDone = false;
 
-    // application context
     private ApplicationContext applicationContext;
 
     // 核心处理器
@@ -42,14 +38,15 @@ public class DisconfMgr implements ApplicationContextAware {
     // scan mgr
     private ScanMgr scanMgr = null;
 
+
+    /** 单例模式 */
     protected static final DisconfMgr INSTANCE = new DisconfMgr();
+
+    private DisconfMgr() {
+    }
 
     public static DisconfMgr getInstance() {
         return INSTANCE;
-    }
-
-    private DisconfMgr() {
-
     }
 
     /**
@@ -67,43 +64,32 @@ public class DisconfMgr implements ApplicationContextAware {
      */
     protected synchronized void firstScan(List<String> scanPackageList) {
 
-        // 该函数不能调用两次
-        if (isFirstInit) {
+        if (isFirstInitDone) {
             LOGGER.info("DisConfMgr has been init, ignore........");
             return;
         }
 
-        //
-        //
-        //
-
         try {
-
             // 导入配置
             ConfigMgr.init();
 
             LOGGER.info("******************************* DISCONF START FIRST SCAN *******************************");
 
-            // registry
             Registry registry = RegistryFactory.getSpringRegistry(applicationContext);
 
             // 扫描器
             scanMgr = ScanFactory.getScanMgr(registry);
-
             // 第一次扫描并入库
             scanMgr.firstScan(scanPackageList);
 
-            // 获取数据/注入/Watch
+
             disconfCoreMgr = DisconfCoreFactory.getDisconfCoreMgr(registry);
+            // 1. 获取远程的所有配置数据  2. 注入到仓库中 3. Watch 配置
             disconfCoreMgr.process();
 
-            //
-            isFirstInit = true;
-
+            isFirstInitDone = true;
             LOGGER.info("******************************* DISCONF END FIRST SCAN *******************************");
-
         } catch (Exception e) {
-
             LOGGER.error(e.toString(), e);
         }
     }
@@ -114,21 +100,19 @@ public class DisconfMgr implements ApplicationContextAware {
     protected synchronized void secondScan() {
 
         // 该函数必须第一次运行后才能运行
-        if (!isFirstInit) {
+        if (!isFirstInitDone) {
             LOGGER.info("should run First Scan before Second Scan.");
             return;
         }
 
         // 第二次扫描也只能做一次
-        if (isSecondInit) {
+        if (isSecondInitDone) {
             LOGGER.info("should not run twice.");
             return;
         }
 
         LOGGER.info("******************************* DISCONF START SECOND SCAN *******************************");
-
         try {
-
             // 扫描回调函数
             if (scanMgr != null) {
                 scanMgr.secondScan();
@@ -144,7 +128,7 @@ public class DisconfMgr implements ApplicationContextAware {
             LOGGER.error(e.toString(), e);
         }
 
-        isSecondInit = true;
+        isSecondInitDone = true;
 
         //
         // 不开启 则不要打印变量map
@@ -173,7 +157,7 @@ public class DisconfMgr implements ApplicationContextAware {
      */
     public synchronized void reloadableScan(String fileName) {
 
-        if (!isFirstInit) {
+        if (!isFirstInitDone) {
             return;
         }
 
@@ -200,24 +184,18 @@ public class DisconfMgr implements ApplicationContextAware {
     }
 
     /**
-     * @Description: 总关闭
+     * 总关闭
      */
     public synchronized void close() {
-
         try {
-
-            // disconfCoreMgr
-            LOGGER.info("******************************* DISCONF CLOSE *******************************");
+            LOGGER.info(" ********** DISCONF CLOSE **********");
             if (disconfCoreMgr != null) {
                 disconfCoreMgr.release();
             }
 
-            // close, 必须将其设置为False,以便重新更新
-            isFirstInit = false;
-            isSecondInit = false;
-
+            isFirstInitDone = false;
+            isSecondInitDone = false;
         } catch (Exception e) {
-
             LOGGER.error("DisConfMgr close Failed.", e);
         }
     }

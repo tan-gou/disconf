@@ -11,7 +11,7 @@ public interface DisconfCoreProcessor {
     void processAllItems();
 
     /**
-     * 处理one配置
+     * 处理one配置 （下载远程配置文件，将配置存储当配置仓库map中，设置watch）
      */
     void processOneItem(String key);
 
@@ -21,7 +21,7 @@ public interface DisconfCoreProcessor {
     void updateOneConfAndCallback(String key) throws Exception;
 
     /**
-     * 特殊的，将数据注入到配置实体中
+     * 将配置注入类实体中
      */
     void inject2Conf();
 }

@@ -7,25 +7,18 @@ import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 import com.baidu.disconf.core.common.path.DisconfWebPathMgr;
 import com.baidu.disconf.core.test.common.BaseCoreTestCase;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-16
- */
+
 public class DisconfWebPathMgrTestCase extends BaseCoreTestCase {
 
     @Test
     public void getZooPrefixUrlTest() {
-
         String result = DisconfWebPathMgr.getZooPrefixUrl("/test");
-
         Assert.assertEquals("/test/prefix", result);
     }
 
     @Test
     public void getZooHostsUrlTest() {
-
         String result = DisconfWebPathMgr.getZooHostsUrl("/test");
-
         Assert.assertEquals("/test/hosts", result);
     }
 

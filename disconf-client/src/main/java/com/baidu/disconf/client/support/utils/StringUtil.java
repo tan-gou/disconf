@@ -11,9 +11,6 @@ import org.apache.commons.lang3.StringUtils;
  * <p>
  * 这个类中的每个方法都可以“安全”地处理<code>null</code>，而不会抛出<code>NullPointerException</code>。
  * </p>
- *
- * @author liaoqiqi
- * @version 2014-8-28
  */
 public abstract class StringUtil {
 
@@ -72,21 +69,13 @@ public abstract class StringUtil {
         return result;
     }
 
-    /**
-     * @param source
-     * @param token
-     *
-     * @return
-     */
-    public static List<String> parseStringToStringList(String source,
-                                                       String token) {
 
+    public static List<String> parseStringToStringList(String source, String token) {
         if (StringUtils.isBlank(source) || StringUtils.isEmpty(token)) {
             return null;
         }
 
         List<String> result = new ArrayList<String>();
-
         String[] units = source.split(token);
         for (String unit : units) {
             result.add(unit);

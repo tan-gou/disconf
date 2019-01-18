@@ -175,52 +175,35 @@ public class DisconfStoreFileProcessorImpl implements DisconfStoreProcessor {
         }
     }
 
-    /**
-     *
-     */
+
     @Override
     public void transformScanData(List<DisconfCenterBaseModel> disconfCenterBaseModels) {
-
         for (DisconfCenterBaseModel disconfCenterFile : disconfCenterBaseModels) {
             transformScanData(disconfCenterFile);
         }
     }
 
-    /**
-     *
-     */
     @Override
     public void transformScanData(DisconfCenterBaseModel disconfCenterBaseModel) {
         getInstance().storeOneFile(disconfCenterBaseModel);
     }
 
-    /**
-     *
-     */
+
     @Override
     public DisconfCenterBaseModel getConfData(String key) {
-
         if (getInstance().getConfFileMap().containsKey(key)) {
-
             return getInstance().getConfFileMap().get(key);
-
         } else {
-
             return null;
         }
     }
 
-    /**
-     *
-     */
     @Override
     public Set<String> getConfKeySet() {
         return getInstance().getConfFileMap().keySet();
     }
 
-    /**
-     *
-     */
+
     @Override
     public String confToString() {
 
@@ -243,7 +226,6 @@ public class DisconfStoreFileProcessorImpl implements DisconfStoreProcessor {
 
     @Override
     public void exclude(Set<String> keySet) {
-
         for (String key : keySet) {
             getInstance().excludeOneFile(key);
         }

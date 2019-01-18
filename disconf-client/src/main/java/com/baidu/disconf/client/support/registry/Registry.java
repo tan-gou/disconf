@@ -2,9 +2,7 @@ package com.baidu.disconf.client.support.registry;
 
 import java.util.List;
 
-/**
- * Created by knightliao on 15/11/26.
- */
+
 public interface Registry {
 
     /**
