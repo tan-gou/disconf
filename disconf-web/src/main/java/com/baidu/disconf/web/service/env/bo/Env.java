@@ -6,21 +6,12 @@ import com.baidu.unbiz.common.genericdao.annotation.Column;
 import com.baidu.unbiz.common.genericdao.annotation.Table;
 import com.github.knightliao.apollo.db.bo.BaseObject;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-16
- */
+
 @Table(db = DB.DB_NAME, name = "env", keyColumn = Columns.ENV_ID)
 public class Env extends BaseObject<Long> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -665241738023640732L;
 
-    /**
-     *
-     */
     @Column(value = Columns.NAME)
     private String name;
 

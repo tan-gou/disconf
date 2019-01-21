@@ -2,9 +2,6 @@ package com.baidu.dsp.common.constant;
 
 /**
  * 错误代码定义
- *
- * @author liaoqiqi
- * @version 2013-12-2
  */
 public enum ErrorCode {
 
@@ -54,7 +51,7 @@ public enum ErrorCode {
 
     private int code = 0;
 
-    private ErrorCode(int code) {
+    ErrorCode(int code) {
         this.code = code;
 
     }

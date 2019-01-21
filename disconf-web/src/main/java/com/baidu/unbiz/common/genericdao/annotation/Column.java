@@ -13,16 +13,12 @@ import java.lang.annotation.Target;
 public @interface Column {
 
     /**
-     * 字段名,
-     *
-     * @return
+     * 字段名
      */
     String value();
 
     /**
      * 是否需要update
-     *
-     * @return 上午10:15:15 created by Darwin(Tianxin)
      */
     boolean maybeModified() default true;
 

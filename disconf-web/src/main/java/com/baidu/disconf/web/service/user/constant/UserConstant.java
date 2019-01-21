@@ -31,9 +31,6 @@ public class UserConstant {
      */
     public static final String USER_SYSTEM = "SYSTEM";
 
-    //
-    //
-    //
-    public static final String USER_APP_SEP = ",";
 
+    public static final String USER_APP_SEP = ",";
 }

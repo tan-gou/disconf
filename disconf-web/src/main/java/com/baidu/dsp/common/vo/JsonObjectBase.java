@@ -8,15 +8,9 @@ import com.baidu.ub.common.commons.ThreadContext;
 
 /**
  * JSON 基类
- *
- * @author liaoqiqi
- * @version 2013-12-3
  */
 public class JsonObjectBase implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8441731449894560959L;
 
     /**

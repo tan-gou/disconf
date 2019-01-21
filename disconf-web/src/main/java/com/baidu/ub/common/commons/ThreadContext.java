@@ -22,9 +22,6 @@ public class ThreadContext {
 
     /**
      * 添加内容到线程上下文中
-     *
-     * @param key
-     * @param value
      */
     public final static void putContext(String key, Object value) {
         Map<String, Object> ctx = CTX_HOLDER.get();
@@ -36,8 +33,6 @@ public class ThreadContext {
 
     /**
      * 从线程上下文中获取内容
-     *
-     * @param key
      */
     @SuppressWarnings("unchecked")
     public final static <T extends Object> T getContext(String key) {
@@ -61,8 +56,6 @@ public class ThreadContext {
 
     /**
      * 删除上下文中的key
-     *
-     * @param key
      */
     public final static void remove(String key) {
         Map<String, Object> ctx = CTX_HOLDER.get();
@@ -73,10 +66,6 @@ public class ThreadContext {
 
     /**
      * 上下文中是否包含此key
-     *
-     * @param key
-     *
-     * @return
      */
     public final static boolean contains(String key) {
         Map<String, Object> ctx = CTX_HOLDER.get();

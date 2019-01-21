@@ -22,10 +22,6 @@ import com.baidu.disconf.web.service.user.service.UserMgr;
 import com.baidu.dsp.common.constant.DataFormatConstants;
 import com.github.knightliao.apollo.utils.time.DateUtils;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-16
- */
 @Service
 @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 public class AppMgrImpl implements AppMgr {

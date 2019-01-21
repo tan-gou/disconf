@@ -6,10 +6,7 @@ import java.util.Map;
 import com.baidu.disconf.core.common.constants.DisConfigTypeEnum;
 import com.baidu.disconf.web.service.zookeeper.dto.ZkDisconfData;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-24
- */
+
 public interface ZooKeeperDriver {
 
     /**

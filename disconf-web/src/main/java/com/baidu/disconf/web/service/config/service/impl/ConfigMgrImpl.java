@@ -48,10 +48,7 @@ import com.github.knightliao.apollo.utils.data.GsonUtils;
 import com.github.knightliao.apollo.utils.io.OsUtil;
 import com.github.knightliao.apollo.utils.time.DateUtils;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-16
- */
+
 @Service
 public class ConfigMgrImpl implements ConfigMgr {
 
@@ -103,10 +100,6 @@ public class ConfigMgrImpl implements ConfigMgr {
 
     /**
      * 配置文件的整合
-     *
-     * @param confListForm
-     *
-     * @return
      */
     public List<File> getDisconfFileList(ConfListForm confListForm) {
 
@@ -263,15 +256,11 @@ public class ConfigMgrImpl implements ConfigMgr {
         Config config = getConfigById(configId);
         String oldValue = config.getValue();
 
-        //
         // 配置数据库的值 encode to db
-        //
         configDao.updateValue(configId, CodeUtils.utf8ToUnicode(value));
         configHistoryMgr.createOne(configId, oldValue, CodeUtils.utf8ToUnicode(value));
 
-        //
         // 发送邮件通知
-        //
         String toEmails = appMgr.getEmails(config.getAppId());
 
         if (applicationPropertyConfig.isEmailMonitorOn()) {
@@ -355,8 +344,6 @@ public class ConfigMgrImpl implements ConfigMgr {
 
     /**
      * 删除配置
-     *
-     * @param configId
      */
     @Override
     public void delete(Long configId) {
@@ -369,8 +356,6 @@ public class ConfigMgrImpl implements ConfigMgr {
 
     /**
      * 主要用于邮箱发送
-     *
-     * @return
      */
     private String getConfigUrlHtml(Config config) {
 

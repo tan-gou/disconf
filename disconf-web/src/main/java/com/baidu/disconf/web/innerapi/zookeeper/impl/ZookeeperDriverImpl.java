@@ -26,9 +26,7 @@ import com.baidu.disconf.web.service.zookeeper.config.ZooConfig;
 import com.baidu.disconf.web.service.zookeeper.dto.ZkDisconfData;
 import com.baidu.dsp.common.exception.RemoteException;
 
-/**
- * Created by knightliao on 15/1/14.
- */
+
 public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, DisposableBean {
 
     protected static final Logger LOG = LoggerFactory.getLogger(ZookeeperDriverImpl.class);
@@ -36,9 +34,7 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
     @Autowired
     private ZooConfig zooConfig;
 
-    //
     // 是否初始化
-    //
     private static boolean isInit = false;
 
     /**
@@ -53,37 +49,29 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
     public void notifyNodeUpdate(String app, String env, String version, String key, String value,
                                  DisConfigTypeEnum disConfigTypeEnum) {
 
-        //
-        // 获取路径
-        //
+        // 获取路径  urlPrefix/app_env_version
         String baseUrlString = ZooPathMgr.getZooBaseUrl(zooConfig.getZookeeperUrlPrefix(), app, env, version);
 
         String path = "";
         if (disConfigTypeEnum.equals(DisConfigTypeEnum.ITEM)) {
-
+            // urlPrefix/app_env_version/item
             path = ZooPathMgr.getItemZooPath(baseUrlString);
         } else {
+            // urlPrefix/app_env_version/file
             path = ZooPathMgr.getFileZooPath(baseUrlString);
         }
 
         try {
-
+            // urlPrefix/app_env_version/file/key
             path = ZooPathMgr.joinPath(path, key);
-
             boolean isExist = ZookeeperMgr.getInstance().exists(path);
             if (!isExist) {
-
                 LOG.info(path + " not exist. not update ZK.");
-
             } else {
-                //
                 // 通知
-                //
                 ZookeeperMgr.getInstance().writePersistentUrl(path, value);
             }
-
         } catch (Exception e) {
-
             LOG.error(e.toString(), e);
             throw new RemoteException("zk.notify.error", e);
         }
@@ -91,26 +79,17 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
 
     /**
      * 获取分布式配置 Map
-     *
-     * @param app
-     * @param env
-     * @param version
-     *
-     * @return
      */
     @Override
     public Map<String, ZkDisconfData> getDisconfData(String app, String env, String version) {
-
+        // 获取路径  urlPrefix/app_env_version
         String baseUrl = ZooPathMgr.getZooBaseUrl(zooConfig.getZookeeperUrlPrefix(), app, env, version);
 
         Map<String, ZkDisconfData> fileMap = new HashMap<String, ZkDisconfData>();
-
         try {
-
             fileMap = getDisconfData(ZooPathMgr.getFileZooPath(baseUrl));
             Map<String, ZkDisconfData> itemMap = getDisconfData(ZooPathMgr.getItemZooPath(baseUrl));
             fileMap.putAll(itemMap);
-
         } catch (KeeperException e) {
             LOG.error(e.getMessage(), e);
         } catch (InterruptedException e) {
@@ -161,10 +140,8 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
     /**
      * 广度搜索法：搜索分布式配置对应的两层数据
      *
-     * @return
-     *
-     * @throws InterruptedException
-     * @throws KeeperException
+     * urlPrefix/app_env_version/file
+     * urlPrefix/app_env_version/item
      */
     private Map<String, ZkDisconfData> getDisconfData(String path) throws KeeperException, InterruptedException {
 
@@ -179,7 +156,6 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
 
         List<String> children = zooKeeper.getChildren(path, false);
         for (String firstKey : children) {
-
             ZkDisconfData zkDisconfData = getDisconfData(path, firstKey, zooKeeper);
             if (zkDisconfData != null) {
                 ret.put(firstKey, zkDisconfData);
@@ -191,11 +167,6 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
 
     /**
      * 获取指定 配置数据
-     *
-     * @return
-     *
-     * @throws InterruptedException
-     * @throws KeeperException
      */
     private ZkDisconfData getDisconfData(String path, String keyName, ZooKeeper zooKeeper)
             throws KeeperException, InterruptedException {
@@ -212,22 +183,17 @@ public class ZookeeperDriverImpl implements ZooKeeperDriver, InitializingBean, D
         List<String> secChiList = zooKeeper.getChildren(curPath, false);
         List<ZkDisconfData.ZkDisconfDataItem> zkDisconfDataItems = new ArrayList<ZkDisconfData.ZkDisconfDataItem>();
 
-        // list
         for (String secKey : secChiList) {
-
-            // machine
             ZkDisconfData.ZkDisconfDataItem zkDisconfDataItem = new ZkDisconfData.ZkDisconfDataItem();
             zkDisconfDataItem.setMachine(secKey);
 
             String thirdPath = curPath + "/" + secKey;
 
-            // value
             byte[] data = zooKeeper.getData(thirdPath, null, null);
             if (data != null) {
                 zkDisconfDataItem.setValue(new String(data, CHARSET));
             }
 
-            // add
             zkDisconfDataItems.add(zkDisconfDataItem);
         }
 

@@ -14,9 +14,7 @@ import com.baidu.disconf.web.service.user.dto.Visitor;
 import com.baidu.disconf.web.service.user.service.UserInnerMgr;
 import com.baidu.ub.common.commons.ThreadContext;
 
-/**
- * @author knightliao
- */
+
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class UserInnerMgrImpl implements UserInnerMgr {
@@ -28,21 +26,15 @@ public class UserInnerMgrImpl implements UserInnerMgr {
 
     @Override
     public Visitor getVisitor(Long userId) {
-
         if (userId == null || userId <= 0) {
             LOG.error("userId is null or <= 0, return null");
             return null;
         }
-
         return null;
     }
 
-    /**
-     *
-     */
     @Override
     public Set<Long> getVisitorAppIds() {
-
         Visitor visitor = ThreadContext.getSessionVisitor();
         return visitor.getAppIds();
     }

@@ -18,9 +18,6 @@ import com.baidu.dsp.common.context.ContextReader;
 
 /**
  * 通用的JSON返回器
- *
- * @author liaoqiqi
- * @version 2013-12-3
  */
 @Component
 public class JsonObjectUtils {

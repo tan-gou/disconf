@@ -2,9 +2,6 @@ package com.baidu.dsp.common.constant;
 
 /**
  * 前后端接口常量
- *
- * @author liaoqiqi
- * @version 2013-12-4
  */
 public class FrontEndInterfaceConstant {
 

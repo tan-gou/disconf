@@ -1,9 +1,6 @@
 package com.baidu.disconf.web.service.env.vo;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-22
- */
+
 public class EnvListVo {
 
     private long id;
@@ -12,7 +9,6 @@ public class EnvListVo {
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -20,7 +16,6 @@ public class EnvListVo {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }

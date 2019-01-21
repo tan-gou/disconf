@@ -25,25 +25,17 @@ import com.baidu.dsp.common.vo.JsonObjectBase;
 import com.baidu.dsp.common.vo.JsonObjectUtils;
 import com.baidu.ub.common.db.DaoPageResult;
 
-/**
- * @author liaoqiqi
- * @version 2013-11-26
- */
+
 public class BaseController implements ApplicationContextAware {
 
     protected ApplicationContext context;
 
-    public void setApplicationContext(ApplicationContext arg0) throws BeansException {
-        this.context = arg0;
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
     }
 
     /**
      * OK：非列表数据
-     *
-     * @param key
-     * @param value
-     *
-     * @return
      */
     protected <T> JsonObjectBase buildSuccess(String key, T value) {
         return JsonObjectUtils.buildObjectSuccess(key, value);
@@ -51,10 +43,6 @@ public class BaseController implements ApplicationContextAware {
 
     /**
      * OK：非列表数据
-     *
-     * @param value
-     *
-     * @return
      */
     protected <T> JsonObjectBase buildSuccess(T value) {
         return JsonObjectUtils.buildSimpleObjectSuccess(value);

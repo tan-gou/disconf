@@ -2,15 +2,9 @@ package com.baidu.unbiz.common.genericdao.operator;
 
 /**
  * 一对参数
- *
- * @author Darwin(Tianxin)
  */
 public class Match implements Pair {
 
-    /**
-     * @param column
-     * @param value
-     */
     public Match(String column, Object value) {
         super();
         this.column = column;

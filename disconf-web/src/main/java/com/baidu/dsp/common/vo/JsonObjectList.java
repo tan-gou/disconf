@@ -8,15 +8,9 @@ import com.baidu.ub.common.commons.ThreadContext;
 
 /**
  * JSON LIST
- *
- * @author liaoqiqi
- * @version 2013-12-3
  */
 public class JsonObjectList extends JsonObjectBase {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -9082300329723012971L;
 
     private Map<String, Object> page = new HashMap<String, Object>();

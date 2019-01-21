@@ -22,16 +22,10 @@ import com.baidu.unbiz.common.genericdao.operator.Modify;
 import com.baidu.unbiz.common.genericdao.operator.Order;
 import com.github.knightliao.apollo.utils.time.DateUtils;
 
-/**
- * @author liaoqiqi
- * @version 2014-6-16
- */
+
 @Service
 public class ConfigDaoImpl extends AbstractDao<Long, Config> implements ConfigDao {
 
-    /**
-     *
-     */
     @Override
     public Config getByParameter(Long appId, Long envId, String version, String key,
                                  DisConfigTypeEnum disConfigTypeEnum) {
@@ -41,24 +35,16 @@ public class ConfigDaoImpl extends AbstractDao<Long, Config> implements ConfigDa
                 new Match(Columns.NAME, key), new Match(Columns.STATUS, Constants.STATUS_NORMAL));
     }
 
-    /**
-     *
-     */
     @Override
     public List<Config> getConfByAppEnv(Long appId, Long envId) {
         if (envId == null) {
             return find(new Match(Columns.APP_ID, appId), new Match(Columns.STATUS, Constants.STATUS_NORMAL));
         } else {
-
             return find(new Match(Columns.APP_ID, appId), new Match(Columns.ENV_ID, envId),
                     new Match(Columns.STATUS, Constants.STATUS_NORMAL));
-
         }
     }
 
-    /**
-     *
-     */
     @Override
     public DaoPageResult<Config> getConfigList(Long appId, Long envId, String version, Page page) {
 
@@ -66,19 +52,14 @@ public class ConfigDaoImpl extends AbstractDao<Long, Config> implements ConfigDa
         List<Match> matchs = new ArrayList<Match>();
 
         matchs.add(new Match(Columns.APP_ID, appId));
-
         matchs.add(new Match(Columns.ENV_ID, envId));
-
         matchs.add(new Match(Columns.VERSION, version));
-
         matchs.add(new Match(Columns.STATUS, Constants.STATUS_NORMAL));
 
         return page2(matchs, daoPage);
     }
 
-    /**
-     *
-     */
+
     @Override
     public List<Config> getConfigList(Long appId, Long envId, String version, Boolean hasValue) {
 
