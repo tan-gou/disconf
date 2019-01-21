@@ -5,24 +5,17 @@ import java.util.List;
 
 /**
  * 每个配置对应的数据
- *
- * @author liaoqiqi
- * @version 2014-9-12
  */
 public class ZkDisconfData {
 
     /**
      * 每个配置对应一个实例的数据
-     *
-     * @author liaoqiqi
-     * @version 2014-9-12
      */
     public static class ZkDisconfDataItem {
 
         // 所在机器
         private String machine = "";
 
-        // 值
         private String value = "";
 
         private List<String> errorList = new ArrayList<String>();
@@ -58,9 +51,7 @@ public class ZkDisconfData {
 
     }
 
-    /*
-     * 
-     */
+
     private List<ZkDisconfDataItem> data = new ArrayList<ZkDisconfDataItem>();
 
     private String key;
